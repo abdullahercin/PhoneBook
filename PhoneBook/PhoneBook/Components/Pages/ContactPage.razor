@@ -1,0 +1,76 @@
+﻿@page "/contact"
+@using PhoneBook.Models
+@using PhoneBook.Services
+
+@inject ContactService _contactService
+
+@rendermode InteractiveServer
+
+<PageTitle>Telefon Rehberi | Net 9</PageTitle>
+
+<h3>Telefon Rehberi</h3>
+
+<form>
+    <div class="mb-3">
+        <label>İsim</label>
+        <input class="form-control" @bind="@contact.Name">
+    </div>
+    <div class="mb-3">
+        <label>Telefon</label>
+        <input class="form-control" @bind="@contact.PhoneNumber">
+    </div>
+    <div class="mb-3">
+        <label>Mail</label>
+        <input class="form-control" @bind="@contact.Email">
+    </div>
+    <div class="mb-3">
+        <label>Şirket</label>
+        <input class="form-control" @bind="@contact.Company">
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="AddContact">Ekle</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>İsim</th>
+            <th>Telefon</th>
+            <th>Email</th>
+            <th>Şirket</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in contactList)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Email</td>
+                <td>@item.Company</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    Contact contact = new Contact();
+    IEnumerable<Contact> contactList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshDataAsync();
+    }
+
+    async Task AddContact()
+    {
+        var resultId = await _contactService.AddContactAsync(contact);
+        await RefreshDataAsync();
+    }
+
+    private async Task RefreshDataAsync()
+    {
+        contactList = await _contactService.GetContactsAsync();
+    }
+
+}

@@ -1,0 +1,39 @@
+﻿@page "/contact"
+@rendermode InteractiveWebAssembly
+
+@using PhoneBook.Shared.Models
+
+<PageTitle>Telefon Rehberi | Net 9</PageTitle>
+
+<h3>Telefon Rehberi</h3>
+
+<form>
+    <div class="mb-3">
+        <label>İsim</label>
+        <input class="form-control" @bind="@contact.Name">
+    </div>
+    <div class="mb-3">
+        <label>Telefon</label>
+        <input class="form-control" @bind="@contact.PhoneNumber">
+    </div>
+    <div class="mb-3">
+        <label>Mail</label>
+        <input class="form-control" @bind="@contact.Email">
+    </div>
+    <div class="mb-3">
+        <label>Şirket</label>
+        <input class="form-control" @bind="@contact.Company">
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="AddContact">Ekle</button>
+</form>
+
+@code {
+
+    Contact contact = new Contact();
+
+    void AddContact()
+    {
+        var test = contact;
+    }
+
+}
